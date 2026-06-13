@@ -50,15 +50,35 @@ class SavingsAccount extends BankAccount{
     }
 
     @Override
-    void withdraw(double amount){
-        if (getBalance() <= 0){
-            System.out.println("Not enough balance.");
+    public void withdraw(double amount){
+        if ( (getBalance() - amount) <= 500){
+            System.out.println("Unable to withdraw due to threshold");
         } else {
             setBalance(getBalance() - amount);
         }
     }
+
+    public void addInterest(){
+        setBalance( getBalance() + (getBalance() *interestRate) );
+    }
 }
 
 public class BankSystem {
+    public static void main(String[] args){
+        SavingsAccount account = new SavingsAccount();
     
+        account.deposit(7500);
+
+        account.setInterestRate(5);
+        account.addInterest();
+        double balance = account.getBalance();
+
+        System.out.println(balance);
+
+        account.withdraw(50000);
+
+        account.withdraw(5000);
+        
+        System.out.println(account.getBalance());
+    }
 }
